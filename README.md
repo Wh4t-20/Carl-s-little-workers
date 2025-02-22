@@ -1,4 +1,12 @@
-# Carl-s-little-
+# Carl's-little-workers
 
-## Hi guys!!! >_<
+We are the little workers of Carl Santillan.
 
+UPCSG Hackathon 2025 Repository Members:
+<ul>
+  <li>Santillan, Carl Benedict (Leader)</li>
+  <li>Aranda, Drebin</li>
+  <li>Castanoz, Loriz Marie</li>
+  <li>Manlangit, Angelo Mari</li>
+  <li>Unson, Cole Andrei</li>
+</ul>
