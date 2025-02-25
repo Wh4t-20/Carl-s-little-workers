@@ -1,0 +1,49 @@
+body {
+    background-image: url("file:///Users/lorizmariecastanos/Desktop/HACKATHON%2025/bg%20solar.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.text {
+    justify-content: center;
+    margin-left: 30%;
+    margin-right: 30%;
+    text-align: center;
+    font-size: 40px;
+    color: white;
+    font-family: "Encode Sans Expanded";
+}
+/* From Uiverse.io by Codecite */ 
+.btn {
+    transition: all 0.3s ease-in-out;
+    font-family: "Dosis", sans-serif;
+  }
+  
+  .btn {
+    width: 150px;
+    height: 60px;
+    border-radius: 50px;
+    background-color: hsla(0, 0%, 100%, 0);
+    box-shadow: 0 20px 30px -6px rgba(238, 103, 97, 0.5);
+    outline: none;
+    cursor: pointer;
+    border: none;
+    font-size: 24px;
+    color: white;
+    margin-left: 30%
+  }
+  
+  .btn:hover {
+    transform: translateY(3px);
+    box-shadow: none;
+  }
+  
+  .btn:active {
+    opacity: 0.5;
+  }
