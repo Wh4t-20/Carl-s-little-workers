@@ -55,6 +55,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     /* margin-top: 100px; */
     /* margin-left: 960px; */
     /* margin-right: 170px; */
@@ -85,10 +86,13 @@ body {
     }
 }
 .fullScreenIn {
-    height: 75vh;
-    width: 27vw;
+    height: 5vh;
+    width: 5vw;
     display: flex;
+    position: absolute;
     justify-content: center;
-    align-items: center;
+    top: 20px;
+    right: 150px;
+    /* align-items: center; */
     z-index: 2;
 }
