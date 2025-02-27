@@ -1,3 +1,14 @@
+/*
+Run the following:
+npm init -y
+npm install @google/generative-ai
+npm install express
+npm install dotenv
+npm install cors
+
+node server.js to run the program in localhost
+*/
+
 const express = require('express');
 const {
     GoogleGenerativeAI,
