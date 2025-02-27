@@ -139,7 +139,9 @@ form {
     display: flex;
     padding: 5px;
 }
-  
+input, button{
+    margin-bottom: 10px;
+}
 input {
     flex-grow: 1;
     margin-right: 10px;

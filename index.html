@@ -32,7 +32,11 @@
         const form = document.getElementById('chat-form');
 
         async function sendMessage() {
-            const userMessage = userInput.value;
+            const userMessage = userInput.value.trim();
+            if (!userMessage) {
+            alert("Please enter a message before sending.");
+            return;
+        }
             userInput.value = ''; // Clear input field
             console.log(userMessage)
             try {

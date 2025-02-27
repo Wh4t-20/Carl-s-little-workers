@@ -32,6 +32,11 @@ app.use(express.static(path.join(__dirname, '/')));
 app.post('/generate', async (req, res) => {
     try {
     const prompt = req.body.prompt;
+    
+    if (!prompt || prompt.trim() === "") {
+        return res.status(400).json({ error: 'Prompt is required' });
+    }
+
   
     const model = genAI.getGenerativeModel({
         model: "gemini-2.0-flash-thinking-exp-01-21",
