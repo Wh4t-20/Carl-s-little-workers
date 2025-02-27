@@ -1,19 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Main Page</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Chat Bot</title>
 </head>
 <body>
     <div class="logo">
-       <img src ="https://i.imgur.com/77lfU72.png" width="550px">
+        <img src = "https://i.imgur.com/mtl1hl8.png">
     </div>
-    <div class = "text"> The first AI assistant for locating areas that would be best fit to add renewable energy sources </div>
-        <a href="index2.html">
-            <button class="btn">GET STARTED</button>
-        </a>
-    <div>
+    <div class="bar"></div>
+    <div class="parentbox">
+        <div class="mapbox"></div>
+        <div class="chatbox">
+            <img src="energAIze name dark.png" id="chat-logo" alt="energAIze logo">
+            <div id="chat-history"></div>
+            <form id="chat-form">
+                <input type="text" autocomplete="off" id="user-input" size="25" placeholder="Enter your message">
+                <button type="submit">Send</button>
+            </form>
+            <div id="loader">
+                <img src="giphy.gif" width="150px" alt="Loading...">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatHistory = document.getElementById('chat-history');
+        const userInput = document.getElementById('user-input');
+        const form = document.getElementById('chat-form');
+
+        async function sendMessage() {
+            const userMessage = userInput.value;
+            userInput.value = ''; // Clear input field
+            console.log(userMessage)
+            try {
+                const response = await fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ prompt: userMessage }),
+                });
+
+                const data = await response.json();
+                const botMessage = data.result;
+    
+                // Adds the messages to the chat history
+                chatHistory.innerHTML += `<div class="user-message">${userMessage}</div>`;
+                chatHistory.innerHTML += `<div class="bot-message">${botMessage}</div>`;
+    
+                // Scroll to the bottom of the chat history
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            } 
+            
+            catch (error) {
+                console.error('Error:', error);
+                // Handle errors gracefully, e.g., display an error message to the user
+            }
+        }
+    
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent form submission
+            const loader = document.getElementById('loader');
+            loader.style.display = 'block'; // Show the loader
+            sendMessage().finally(() => {
+                loader.style.display = 'none'; // Hide the loader after the message is sent
+            });;
+        });
+    </script>
 </body>
 </html>
