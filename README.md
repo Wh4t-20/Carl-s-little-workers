@@ -13,11 +13,11 @@ UPCSG Hackathon 2025 Repository Members:
 
 ### Important:
 Must run the following in the terminal to install the node modules from Node.js to run the code:
-<code>
+```install_codes
 npm init -y  
 npm install @google/generative-ai
 npm install express
 npm install dotenv
 npm install cors
-</code>
+```
 > node server.js to run the program in localhost
