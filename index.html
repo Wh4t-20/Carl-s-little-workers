@@ -36,6 +36,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
+        const nominatimURL = "https://nominatim.openstreetmap.org/reverse";
+
         // Initialize the map
         const map = L.map('map').setView([10.3157, 123.8854], 10); // Cebu, Philippines
 
@@ -47,13 +49,16 @@
         let currentMarker = null; // To store only one marker at a time
 
         // Function to add a single marker (removes previous marker)
-        function addMarker(lat, lon, text) {
+        async function addMarker(lat, lon, text) {
             if (currentMarker) {
                 map.removeLayer(currentMarker); // Remove previous marker
             }
-        
+
             currentMarker = L.marker([lat, lon]).addTo(map).bindPopup(text).openPopup();
-            map.setView([lat, lon], 12);
+            map.setView([lat, lon]);
+
+            const locationName = await getLocationName(lat, lon);
+            userInput.value = `Location: ${locationName}`;
         }
 
         // Allow users to add markers by clicking on the map
@@ -61,29 +66,18 @@
             const { lat, lng } = event.latlng;
             const markerText = `Marker at ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
             addMarker(lat, lng, markerText);
-            userInput.value = `Coordinates: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
         }); 
 
-        // Search function using OpenStreetMap Nominatim API
-        function searchLocation() {
-            const query = document.getElementById('search-location').value;
-            if (!query) {
-                alert("Enter a location to search.");
-                return;
+        // Function to get location name from coordinates (Reverse Geocoding)
+        async function getLocationName(lat, lon) {
+            const url = `${nominatimURL}?format=json&lat=${lat}&lon=${lon}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                return data.display_name || "Unknown Location";
+            } catch (error) {
+                console.error("Error fetching location name:", error);
             }
-
-            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.length === 0) {
-                        alert("Location not found.");
-                        return;
-                    }
-                    const { lat, lon, display_name } = data[0];
-                    map.setView([lat, lon], 12);
-                    addMarker(lat, lon, display_name);
-                })
-                .catch(error => console.error('Error fetching location:', error));
         }
 
         // Chat functionality
