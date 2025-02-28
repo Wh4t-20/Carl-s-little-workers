@@ -27,7 +27,7 @@
                 <button type="submit">Send</button>
             </form>
             <div id="loader" style="display: none;">
-                <img src="giphy.gif" width="150px" alt="Loading...">
+                <img src="loader.gif" width="150px" alt="Loading...">
             </div>
         </div>
     </div>
@@ -39,22 +39,30 @@
         // Initialize the map
         const map = L.map('map').setView([10.3157, 123.8854], 10); // Cebu, Philippines
 
-        // Add OpenStreetMap tile layer
+        // Add OpneStreetMap tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Function to add a marker at clicked location
+        let currentMarker = null; // To store only one marker at a time
+
+        // Function to add a single marker (removes previous marker)
         function addMarker(lat, lon, text) {
-            L.marker([lat, lon]).addTo(map).bindPopup(text).openPopup();
+            if (currentMarker) {
+                map.removeLayer(currentMarker); // Remove previous marker
+            }
+        
+            currentMarker = L.marker([lat, lon]).addTo(map).bindPopup(text).openPopup();
+            map.setView([lat, lon], 12);
         }
 
         // Allow users to add markers by clicking on the map
         map.on('click', function(event) {
             const { lat, lng } = event.latlng;
-            const markerText = `Custom Marker at ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+            const markerText = `Marker at ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
             addMarker(lat, lng, markerText);
-        });
+            userInput.value = `Coordinates: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+        }); 
 
         // Search function using OpenStreetMap Nominatim API
         function searchLocation() {

@@ -170,6 +170,7 @@ button:hover {
 
 #loader {
   display: none; /* Hide by default */
+  opacity: 0.8;
   position: absolute;
   top: 50%;
   left: 76.5%;
