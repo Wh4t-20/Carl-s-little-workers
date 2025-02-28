@@ -5,14 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Bot</title>
+
+    <!-- Leaflet.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
 </head>
 <body>
     <div class="logo">
-        <img src = "https://i.imgur.com/mtl1hl8.png">
+        <img src="https://i.imgur.com/mtl1hl8.png">
     </div>
     <div class="bar"></div>
     <div class="parentbox">
-        <div class="mapbox"></div>
+        <div class="mapbox">
+            <div id="map"></div>
+        </div>
         <div class="chatbox">
             <img src="energAIze name dark.png" id="chat-logo" alt="energAIze logo">
             <div id="chat-history"></div>
@@ -20,13 +26,59 @@
                 <input type="text" autocomplete="off" id="user-input" size="25" placeholder="Enter your message">
                 <button type="submit">Send</button>
             </form>
-            <div id="loader">
+            <div id="loader" style="display: none;">
                 <img src="giphy.gif" width="150px" alt="Loading...">
             </div>
         </div>
     </div>
 
+    <!-- Leaflet.js JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
+        // Initialize the map
+        const map = L.map('map').setView([10.3157, 123.8854], 10); // Cebu, Philippines
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Function to add a marker at clicked location
+        function addMarker(lat, lon, text) {
+            L.marker([lat, lon]).addTo(map).bindPopup(text).openPopup();
+        }
+
+        // Allow users to add markers by clicking on the map
+        map.on('click', function(event) {
+            const { lat, lng } = event.latlng;
+            const markerText = `Custom Marker at ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+            addMarker(lat, lng, markerText);
+        });
+
+        // Search function using OpenStreetMap Nominatim API
+        function searchLocation() {
+            const query = document.getElementById('search-location').value;
+            if (!query) {
+                alert("Enter a location to search.");
+                return;
+            }
+
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        alert("Location not found.");
+                        return;
+                    }
+                    const { lat, lon, display_name } = data[0];
+                    map.setView([lat, lon], 12);
+                    addMarker(lat, lon, display_name);
+                })
+                .catch(error => console.error('Error fetching location:', error));
+        }
+
+        // Chat functionality
         const chatHistory = document.getElementById('chat-history');
         const userInput = document.getElementById('user-input');
         const form = document.getElementById('chat-form');
@@ -34,11 +86,13 @@
         async function sendMessage() {
             const userMessage = userInput.value.trim();
             if (!userMessage) {
-            alert("Please enter a message before sending.");
-            return;
-        }
+                alert("Please enter a message before sending.");
+                return;
+            }
+
             userInput.value = ''; // Clear input field
-            console.log(userMessage)
+            console.log("User Input:", userMessage);
+
             try {
                 const response = await fetch('/generate', {
                     method: 'POST',
@@ -50,28 +104,42 @@
 
                 const data = await response.json();
                 const botMessage = data.result;
-    
-                // Adds the messages to the chat history
+
+                // Adds messages to the chat history
                 chatHistory.innerHTML += `<div class="user-message">${userMessage}</div>`;
                 chatHistory.innerHTML += `<div class="bot-message">${botMessage}</div>`;
-    
+
+                // Check if response contains a location & add marker
+                const locationMatch = botMessage.match(/Location: (.*)/);
+                if (locationMatch) {
+                    const location = locationMatch[1];
+                    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.length > 0) {
+                                const { lat, lon } = data[0];
+                                addMarker(lat, lon, location);
+                            }
+                        })
+                        .catch(error => console.error('Error fetching location:', error));
+                }
+
                 // Scroll to the bottom of the chat history
                 chatHistory.scrollTop = chatHistory.scrollHeight;
-            } 
-            
-            catch (error) {
+
+            } catch (error) {
                 console.error('Error:', error);
-                // Handle errors gracefully, e.g., display an error message to the user
             }
         }
-    
+
         form.addEventListener('submit', (event) => {
             event.preventDefault(); // Prevent form submission
             const loader = document.getElementById('loader');
             loader.style.display = 'block'; // Show the loader
+
             sendMessage().finally(() => {
                 loader.style.display = 'none'; // Hide the loader after the message is sent
-            });;
+            });
         });
     </script>
 </body>
