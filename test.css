@@ -1,0 +1,101 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background:url("https://i.imgur.com/vFUZk2h.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar {
+    position: fixed;
+    top: 5px;
+    left: 10px;
+    margin-top: -10px;
+}
+
+.logo-container {
+    position: relative;
+    display: inline-block;
+    padding: 1px;
+}
+
+.logo {
+    width: 50px;
+    cursor: pointer;
+    margin-top: 10px;
+    z-index: 9999;
+}
+
+.nav-links {
+    position: absolute;
+  left: -240px; /* Hidden by default */
+  width: 220px;
+  height: 100%;
+  transition: left 0.3s ease-in-out;
+
+
+
+    list-style: none;
+    top: 5%;
+    background-color: rgb(35, 39, 101);
+    padding: 21px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    z-index: -9999;
+}
+
+.nav-links li a {
+    color: white;
+    font-size: 18px;
+    /*font-weight: bold;*/
+    text-decoration: none;
+    font-family: "Encode sans Expanded";
+}
+
+.nav-item {
+    text-decoration: none;
+    color: black;
+    padding: 5px 10px;
+    transition: background 0.3s ease;
+}
+
+.nav-item:hover {
+    background: rgb(21, 90, 120);
+    color: rgb(178, 178, 178);
+    border-radius: 3px;
+}
+
+.logo-container:hover .nav-links {
+    opacity: 1; 
+    transform: translateX(220px);
+    transition: transform 0.4s ease-in-out;
+    padding-left: 60px;
+    display: flex; 
+    z-index: -9999;
+}
+
+.logo-container:not(:hover) .nav-links { 
+    transform: translateX(-220px);
+    transition: transform 0.4s ease-in-out;
+    padding-left: 60px;
+    display: flex; 
+    z-index: -9999;
+}
+
+.bar {
+    background: rgb(85, 89, 121); /* Dark background */
+    height: 60px;
+    width: 100%; 
+    position: fixed; /* Keep it at the top */
+    top: 0;
+    left: 0;
+    display: flex; /* Make sure navbar is inside */
+    align-items: center;
+    padding-left: 10px;
+    z-index: 1000; /* Ensure it's on top */
+}
