@@ -11,23 +11,22 @@
             let currentMarker = null; // To store only one marker at a time
 
             // Function to add a single marker (removes previous marker)
-            async function addMarker(lat, lon, text) {
+            async function addMarker(lat, lon) {
                 if (currentMarker) {
                     map.removeLayer(currentMarker); // Remove previous marker
                 }
 
-                currentMarker = L.marker([lat, lon]).addTo(map).bindPopup(text).openPopup();
+                const locationName = await getLocationName(lat, lon);
+                currentMarker = L.marker([lat, lon]).addTo(map).bindPopup(locationName).openPopup();
                 map.setView([lat, lon]);
 
-                const locationName = await getLocationName(lat, lon);
                 userInput.value = `Location: ${locationName}`;
             }
 
             // Allow users to add markers by clicking on the map
             map.on('click', function(event) {
                 const { lat, lng } = event.latlng;
-                const markerText = `Marker at ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-                addMarker(lat, lng, markerText);
+                addMarker(lat, lng);
             }); 
 
             // Function to get location name from coordinates (Reverse Geocoding)
@@ -82,7 +81,7 @@
                             .then(data => {
                                 if (data.length > 0) {
                                     const { lat, lon } = data[0];
-                                    addMarker(lat, lon, location);
+                                    addMarker(lat, lon);
                                 }
                             })
                             .catch(error => console.error('Error fetching location:', error));
