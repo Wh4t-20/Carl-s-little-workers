@@ -28,6 +28,7 @@ body {
     cursor: pointer;
     margin-top: 10px;
     z-index: 9999;
+    transition: transform 0.5s ease-in-out;
 }
 
 .nav-links {
@@ -79,7 +80,11 @@ body {
 }
 
 .logo:hover {
-    animation: rotateClockwise 5s linear infinite;
+    transform: rotate(360deg);
+}
+
+.logo:not(:hover) {
+    transform: rotate(-360deg);
 }
 
 .logo-container:not(:hover) .nav-links {
