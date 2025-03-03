@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
     margin: 0;
@@ -6,7 +7,9 @@
 }
 
 body {
-    font-family: "Encode Sans Expanded";
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
 }
 
 .header {
@@ -24,7 +27,7 @@ body {
 }
 
 .header .content {
-    margin-top: -100px;
+    margin-top: -50px;
 }
 
 @keyframes parallax {
@@ -62,7 +65,7 @@ body {
     color: white;
     position: absolute;
     left: 50%;
-    top: 80%;
+    top: 89%;
     transform: translateX(-50%);
     text-decoration: none;
     display: flex;
@@ -108,6 +111,7 @@ body {
 .specific {
     background: url("https://i.imgur.com/aIlbmlp.jpeg") no-repeat center center fixed;
     color: #333;
+
 }
 
 
@@ -138,8 +142,9 @@ body {
 }
 
 .specific .frame {
+    font-family: "Poppins", sans-serif;
     background-color: rgba(255, 255, 255, 0.8); 
-    border-radius: 10px;
+    border-radius: none;
     width: 20%; 
     height: 400px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -161,7 +166,8 @@ body {
 }
 
 .specific .frame:hover {
-    transform: scale(1.03); 
+    transform: scale(1.05); 
+    border-radius: 20px;
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
 }
 
