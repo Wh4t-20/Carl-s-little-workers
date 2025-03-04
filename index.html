@@ -1,40 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
-
-    <!-- Leaflet.js CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-
+    <title>EnergAIze</title>
+    <link rel="icon" href="https://i.imgur.com/tjr38HB.gif">
+    <link rel="stylesheet" href="index_style.css">
 </head>
-<body>
-    <div class="logo">
-        <img src="https://i.imgur.com/mtl1hl8.png">
-    </div>
-    <div class="bar"></div>
-    <div class="parentbox">
-        <div class="mapbox">
-            <div id="map"></div>
-        </div>
-        <div class="chatbox">
-            <img src="energAIze name dark.png" id="chat-logo" alt="energAIze logo">
-            <div id="chat-history"></div>
-            <form id="chat-form">
-                <input type="text" autocomplete="off" id="user-input" size="25" placeholder="Enter your message">
-                <button type="submit">Send</button>
-            </form>
-            <div id="loader" style="display: none;">
-                <img src="loader.gif" width="150px" alt="Loading...">
+    <body>
+        <header id="header" class="header">
+            <div class="navigationbar">
+                <a class="activehome" href="#header">Home</a>
+                <a class = "aboutai" href="#energAIze">energAIze </a>
+                <a class="about_us" href="#AboutUs">About Us</a>
+                <a class="Sustainability" href ="#sustain">Help </a>
             </div>
+            <div class="content">
+                <div class="logo">
+                    <img src="https://i.imgur.com/tjr38HB.gif" width="280vw"><br>
+                    <img src="https://i.imgur.com/rYWNmcI.png" width="280vw">
+                </div>
+                <p>The first AI assistant for locating areas that would be best fit to add renewable energy sources.</p>
+                <a href="main_page.html" class="btn">GET STARTED</a>
+            </div>
+        </header>
+
+        <section id="energAIze" class="section energAIze">
+            <div class="content">
+                <div class="contentAI">
+                    <img src="https://i.imgur.com/77lfU72.png" width="300px">
+                </div>
+                <h2>How Does energAIze Work?</h2>
+                <p>Solar panels convert sunlight into electricity, using photovoltaic cells that absorb light...</p>
+            </div>
+        </section>
+
+        <section id="AboutUs" class="section AboutUs">
+            <div class="content">
+                <h2>About US</h2>
+                <p>Carl's little worker </p>
+            </div>
+        </section>
+
+        <section id="specific" class="section specific">
+            <div class="about-us-frames">
+                <div class="frame" data-hover-text="Cole - Little Worker 4">
+                    <img src="https://i.imgur.com/s3rEbCQ.png">
+                </div>
+                <div class="frame" data-hover-text="Drebin - Little Worker 2">
+                    <img src="https://i.imgur.com/n0AjHol.png">
+                </div>
+                <div class="frame" data-hover-text="Carl - Big Boss">
+                    <img src="https://i.imgur.com/6I7XyaL.png">
+                </div>
+                <div class="frame" data-hover-text="Loriz - Little Worker 1">
+                    <img src="https://i.imgur.com/bSvSUk0.png">
+                </div>
+                <div class="frame" data-hover-text="Angelo - Little Worker 3">
+                    <img src="https://i.imgur.com/BUUQAs3.png">
+                </div>
+            </div>
+        </section>
+
+    
+        <section id="sustain" class="section sustain">
+            <div class="content">
+                <h2>Use Sustainable Energy Today</h2>
+                <p>Save Me.</p>
         </div>
-    </div>
+    </section>
 
-    <!-- Leaflet.js JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <footer class="footer">
+        <p>&copy; 2025 energAIze &copy;</p>
+    </footer>
 
-    <script src="index.js"></script>
 </body>
 </html>

@@ -27,6 +27,11 @@ const apiKey = process.env.API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 app.use(express.json());
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 app.use(express.static(path.join(__dirname, '/' )));
 
 app.post('/generate', async (req, res) => {
@@ -36,7 +41,6 @@ app.post('/generate', async (req, res) => {
     if (!prompt || prompt.trim() === "") {
         return res.status(400).json({ error: 'Prompt is required' });
     }
-
   
     const model = genAI.getGenerativeModel({
         model: "gemini-2.0-flash-thinking-exp-01-21",
