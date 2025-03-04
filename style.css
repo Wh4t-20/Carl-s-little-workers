@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 * {
     margin: 0;
@@ -24,6 +24,7 @@ body {
     position: relative;
     overflow: hidden;
     animation: parallax 30s infinite linear;
+    font-size: 45px;
 }
 
 .header .content {
@@ -52,7 +53,7 @@ body {
 
 .btn {
     transition: all 0.3s ease-in-out;
-    font-family: "Encode Sans Expanded";
+    font-family: "Poppins", sans-serif;
     width: 250px;
     height: 70px;
     border-radius: 50px;
@@ -65,7 +66,7 @@ body {
     color: white;
     position: absolute;
     left: 50%;
-    top: 89%;
+    top: 80%;
     transform: translateX(-50%);
     text-decoration: none;
     display: flex;
@@ -82,144 +83,305 @@ body {
     opacity: 0.5;
 }
 
-
 .section {
     padding: 100px 20px;
     text-align: center;
 }
-.contentAI {
-    float:left;
+.contentAI{
+    margin-right: 20px; 
 }
-.energAIze {
-   background-color:rgb( 7,64,123);
-    height: 350px;
-    color: white;
+
+.energAIze .content {
     display: flex;
-    justify-content: center;
-    align-items: left;
-    text-align: left; 
-
+    align-items: center;
 }
-
 .AboutUs {
     background: url("https://i.imgur.com/D6echLv.jpeg") no-repeat center center fixed;
     background-size: cover;
     color: white;
     position: relative;
+    height: 50hv;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px; 
 }
 
 .specific {
-    background: url("https://i.imgur.com/aIlbmlp.jpeg") no-repeat center center fixed;
+    background: url("https://i.imgur.com/D6echLv.jpeg") no-repeat center center fixed;
     color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    padding: 50px 0;
+    background-size: cover;
+    overflow: hidden;
+}
 
+.energAIze {
+    background-color: rgb(7, 64, 123);
+    height: 500px; 
+    color: white;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 20px;
+    position: relative; 
+}
+
+.energAIze-header {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    text-align: center;
+    margin-bottom: 30px;
+
+   
+}
+
+.energAIze-logo {
+    width: 450px;
+    height: auto;
+}
+
+.energAIze h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.ai-card {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 10px;
+    width: 16%;
+    height: 150px; 
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    overflow: hidden;
 }
 
 
+.ai-card h3 {
+    font-size: 1.4rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.ai-card p {
+    margin-top: 10px;
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    text-align: left;
+    transition: opacity 1s ease-in-out, height 1s ease-in-out;
+}
+
+.ai-card:hover {
+    height: auto; 
+    padding: 15px;
+}
+
+.ai-card:hover p {
+    opacity: 1;
+    visibility: visible;
+   height:auto;
+}
+
+.ai-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    max-width: 100%;
+    overflow-x: auto; 
+    padding: 10px;
+    margin: 0 auto;
+    flex-wrap: nowrap;
+}
+
+
+@media (max-width: 1200px) {
+    .ai-card {
+        width: 18%; 
+    }
+}
+
+@media (max-width: 900px) {
+    .ai-card-container {
+        flex-wrap: wrap; 
+    }
+    .ai-card {
+        width: 30%; 
+    }
+}
+
+@media (max-width: 600px) {
+    .ai-card {
+        width: 45%; 
+        height: auto;
+    }
+}
+
+
+.ai-card:hover {
+    transform: scale(1.08);
+    box-shadow: 0px 10px 25px rgba(255, 255, 255, 0.4);
+}
+
+.about-us-frames {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.flip-card {
+    width: 19%;
+    height: 280px;
+    perspective: 1000px;
+}
+
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+
+.flip-card-front {
+    background-color: #bbb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+}
+
+.flip-card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    
+}
+
+.flip-card-back {
+    background-color: #2980b9;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transform: rotateY(180deg);
+}
+
+.flip-card-back h1 {
+    font-size: 24px;
+}
+
+.flip-card-back p {
+    font-size: 18px;
+}
 .sustain {
     background: url("https://i.imgur.com/pVXZRJL.jpeg") no-repeat center center fixed;
     background-size: cover;
     color: white;
-    height: 50vh;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 50px 20px;
     position: relative;
 }
 
+.sustain .content {
+    text-align: center;
+    columns: 100px 3;
+    text-align: left;
+
+}
+
+.sustain h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.3);
+}
+
+.sustain p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
 
 .footer {
     background-color: #333333;
     color: white;
     text-align: center;
     padding: 20px;
+    
 }
-
-.energAIze, .AboutUs, .sustain {
-    background-attachment: fixed;
-}
-
-.specific .about-us-frames {
-    display: flex; 
-    justify-content: center; 
-    flex-wrap: nowrap; 
-}
-
-.specific .frame {
-    font-family: "Poppins", sans-serif;
-    background-color: rgba(255, 255, 255, 0.8); 
-    border-radius: none;
-    width: 20%; 
-    height: 400px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease-in-out;
-    border: none;
-    margin: 0;
-    position: relative;
-    overflow: hidden; 
-}
-
-
-.specific .frame img {
-    width: 100%;
-    height: 100%; 
-    object-fit: cover; 
-    object-position: top center; 
-   
-}
-
-.specific .frame:hover {
-    transform: scale(1.05); 
-    border-radius: 20px;
-    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
-}
-
-
-
-.specific .frame:hover::after {
-    content: attr(data-hover-text); 
-    position: absolute;
-    top: 10px; 
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 15px;
-    color: #fff;
-    background-color:  rgba(0, 0, 0, 0.3); 
-    padding: 10px;
-    border-radius: 5px;
-    width: 80%; 
-    text-align: center;
-    z-index: 10; 
-    line-height: 1.4;
-    white-space: pre-wrap; 
-    word-wrap: break-word; 
-}
-
 
 .navigationbar {
     position: fixed;
     top: 0;
     right: 0;
-    background-color: hsla(0, 0%, 100%, 0);
     display: flex;
-    justify-content: flex-end; 
-    padding: 10px 20px; 
-    z-index: 1000; 
+    justify-content: flex-end;
+    padding: 10px 20px;
+    z-index: 1000;
+    gap: 10px; 
+    background: none; 
 }
 
 .navigationbar a {
-    color: #f2f2f2;
+    background-color: rgba(32, 36, 75, 0.464); 
+    color: white;
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
     text-align: center;
-    border-radius: 50px;
+    border-radius: 50px; 
+    transition: all 0.3s ease-in-out;
 }
 
 .navigationbar a:hover {
-    background-color: hsla(0, 0%, 100%, 0) scale(0.5);
-    box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+    background-color: rgba(36, 24, 138, 0.4); 
+    box-shadow: 0px 5px 10px rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
 }
 
 .navigationbar a:active {
-    background-color: #0449aa;
+    background-color: #ce7106;
     color: white;
-    transform: scale(0.9); 
+    transform: scale(0.95);
 }
