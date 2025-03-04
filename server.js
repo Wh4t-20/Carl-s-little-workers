@@ -27,15 +27,23 @@ const apiKey = process.env.API_KEY;
 const genAI = new GoogleGenerativeAI(apiKey);
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '/')));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'main.html'))
+});
+app.use(express.static(path.join(__dirname, '/' )));
 
 app.post('/generate', async (req, res) => {
     try {
     const prompt = req.body.prompt;
+    
+    if (!prompt || prompt.trim() === "") {
+        return res.status(400).json({ error: 'Prompt is required' });
+    }
+
   
     const model = genAI.getGenerativeModel({
         model: "gemini-2.0-flash-thinking-exp-01-21",
-        systemInstruction: "Context:\nYou are a solar energy engineer assistant. I ask you a question about identifying the best solar farm locations in Cebu, Philippines and you answer the question based on existing data. You only answer questions related to solar energy, anything else should be declined kindly. Make the response concise, around 1 to 5 sentences.\n\nSteps:\nGather information on Solar Irradiance Data, Weather Patterns, Topographic and Land Use Data, and Energy Consumption Patterns in the Cebu, Philippines\nUnderstand what the user asks\nGenerate a response based on the gathered information\nGive them a scale from 1 to 10 on how efficient a solar farm would be at a specific location\nOpen google maps if there is a question on a location\n\nexample output:\nLocation: [specific location name]\nScale: [non-negative number] out of 10\n\nExplanation: \n[1-5 sentences explanation that shows data]\n\nThank you for that wonderful question, user-sunbaenim! \n",
+        systemInstruction: "You are an AI assistant specializing in solar energy engineering, designed to assess optimal locations for solar farms in Cebu, Philippines. Your role is to provide data-driven recommendations based on real-world factors. You only answer questions strictly related to solar energy and politely decline unrelated queries. Your responses must be concise (1 to 5 sentences) and backed by relevant data.\nEvaluation Criteria:\nYou analyze locations based on the following key factors:\n1. Solar Irradiance – Availability of sunlight in kWh/m²/day.\n2. Weather Patterns – Cloud cover, rainfall, and temperature trends.\n3. Topography & Land Use – Flat land, vegetation, zoning laws, and restrictions.\n4. Energy Demand & Infrastructure – Proximity to demand centers and grid connectivity.\nResponse Process:\n1. Identify the user's specific location or requirement within Cebu.\n2. Retrieve and analyze relevant data for that area.\n3. Provide a Solar Farm Suitability Score (1-10) based on efficiency and feasibility.\n4. Offer a clear, data-backed explanation for the rating.\n5. If the user says “Thank you” or “Goodbye”, say “Thank you for using energAIze, user-imnida!”, else say “Let me know if you need further details.”\nExample Output:\nLocation: [Location Name]\nSolar Farm Suitability Score: [1-10]\n",
     });
   
     const generationConfig = {
