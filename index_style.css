@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.header {
+    background: url("https://i.imgur.com/pVXZRJL.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: parallax 30s infinite linear;
+}
+
+.header .content {
+    margin-top: -50px;
+}
+
+@keyframes parallax {
+    from {
+        background-position: center top;
+    }
+    to {
+        background-position: center bottom;
+    }
+}
+
+.header .content h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.header .content p {
+    font-size: 40px;
+    margin-bottom: 30px;
+    max-width: 800px;
+}
+
+.btn {
+    transition: all 0.3s ease-in-out;
+    font-family: "Encode Sans Expanded";
+    width: 250px;
+    height: 70px;
+    border-radius: 50px;
+    background-color: hsla(0, 0%, 100%, 0);
+    box-shadow: 0 20px 30px -6px rgba(243, 136, 15, 0.5);
+    outline: none;
+    cursor: pointer;
+    border: none;
+    font-size: 24px;
+    color: white;
+    position: absolute;
+    left: 50%;
+    top: 89%;
+    transform: translateX(-50%);
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn:hover {
+    transform: translateX(-50%) scale(0.99);
+    box-shadow: 0 20px 30px -6px rgba(243, 137, 15, 0.975);
+}
+
+.btn:active {
+    opacity: 0.5;
+}
+
+
+.section {
+    padding: 100px 20px;
+    text-align: center;
+}
+.contentAI {
+    float:left;
+}
+.energAIze {
+   background-color:rgb( 7,64,123);
+    height: 350px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    text-align: left; 
+
+}
+
+.AboutUs {
+    background: url("https://i.imgur.com/D6echLv.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    position: relative;
+}
+
+.specific {
+    background: url("https://i.imgur.com/aIlbmlp.jpeg") no-repeat center center fixed;
+    color: #333;
+
+}
+
+
+.sustain {
+    background: url("https://i.imgur.com/pVXZRJL.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    height: 50vh;
+    position: relative;
+}
+
+
+.footer {
+    background-color: #333333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.energAIze, .AboutUs, .sustain {
+    background-attachment: fixed;
+}
+
+.specific .about-us-frames {
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: nowrap; 
+}
+
+.specific .frame {
+    font-family: "Poppins", sans-serif;
+    background-color: rgba(255, 255, 255, 0.8); 
+    border-radius: none;
+    width: 20%; 
+    height: 400px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    border: none;
+    margin: 0;
+    position: relative;
+    overflow: hidden; 
+}
+
+
+.specific .frame img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; 
+    object-position: top center; 
+   
+}
+
+.specific .frame:hover {
+    transform: scale(1.05); 
+    border-radius: 20px;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.specific .frame:hover::after {
+    content: attr(data-hover-text); 
+    position: absolute;
+    top: 10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 15px;
+    color: #fff;
+    background-color:  rgba(0, 0, 0, 0.3); 
+    padding: 10px;
+    border-radius: 5px;
+    width: 80%; 
+    text-align: center;
+    z-index: 10; 
+    line-height: 1.4;
+    white-space: pre-wrap; 
+    word-wrap: break-word; 
+}
+
+
+.navigationbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: hsla(0, 0%, 100%, 0);
+    display: flex;
+    justify-content: flex-end; 
+    padding: 10px 20px; 
+    z-index: 1000; 
+}
+
+.navigationbar a {
+    color: #f2f2f2;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    text-align: center;
+    border-radius: 50px;
+}
+
+.navigationbar a:hover {
+    background-color: hsla(0, 0%, 100%, 0) scale(0.5);
+    box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.navigationbar a:active {
+    background-color: #0449aa;
+    color: white;
+    transform: scale(0.9); 
+}

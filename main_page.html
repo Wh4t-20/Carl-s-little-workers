@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="main_style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://i.imgur.com/tjr38HB.gif">
+    <title>EnergAIze</title>
+    
+    <!-- Leaflet.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+<body>
+    <header class="bar">
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="https://i.imgur.com/mtl1hl8.png" id="header-logo">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-item">Home</a></li>
+                    <li><a href="index.html#AboutUs" class="nav-item">About Us</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="parentbox">
+        <div class="mapbox">
+            <div id="map"></div>
+        </div>
+        
+        <div class="chatbox">
+            <img src="energAIze name dark.png" id="chat-logo" alt="energAIze logo">
+            <div id="chat-history"></div>
+            <form id="chat-form">
+                <input type="text" autocomplete="off" id="user-input" size="25" placeholder="Enter your message">
+                <button type="submit">Send</button>
+            </form>
+            <div id="loader" style="display: none;">
+                <img src="loader.gif" width="150px" alt="Loading...">
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet.js JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="main_page.js"></script>
+</body>
+</html>
