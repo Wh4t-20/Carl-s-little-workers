@@ -25,12 +25,15 @@
 
     <div class="parentbox">
         <div class="mapbox">
+            <input type="text" autocomplete="off" id="map-search" placeholder="Search for a location">
             <div id="map"></div>
         </div>
-        
+
         <div class="chatbox">
             <img src="energAIze name dark.png" id="chat-logo" alt="energAIze logo">
-            <div id="chat-history"></div>
+            <div id="chat-history">
+                <div class="start-message">Good day, user-imnida!<br>Ask me about any location in Cebu to build your solar farm!<br>You can also place a marker in the map if you have a specific location in mind.</div>
+            </div>
             <form id="chat-form">
                 <input type="text" autocomplete="off" id="user-input" size="25" placeholder="Enter your message">
                 <button type="submit">Send</button>

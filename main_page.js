@@ -41,6 +41,26 @@ async function getLocationName(lat, lon) {
     }
 }
 
+// For the map search
+const mapSearch = document.getElementById('map-search');
+mapSearch.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const location = e.target.value;
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    const { lat, lon } = data[0];
+                    addMarker(lat, lon);
+                }
+            })
+            .catch(error => console.error('Error fetching location:', error));
+
+        mapSearch.value = "";
+    }
+});
+
 // Chat functionality
 const chatHistory = document.getElementById('chat-history');
 const userInput = document.getElementById('user-input');
