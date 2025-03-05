@@ -1,34 +1,46 @@
 const nominatimURL = "https://nominatim.openstreetmap.org/reverse";
 
-// Initialize the map, set it in Cebu
-const map = L.map('map').setView([10.3157, 123.8854], 10); 
+// Initialize the map
+const map = L.map('map').setView([10.3157, 123.8854], 10); // Cebu, Philippines
 
 // Add OpneStreetMap tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-//one marker at a time
-let currentMarker = null; 
 
-async function addMarker(lat, lon) {
+let currentMarker = null; // To store only one marker at a time
+let selectedLat = null;
+let selectedLon = null;
+let selectedLocation = "";
+
+// Function to add a single marker (removes previous marker)
+async function addMarker(lat, lon, locationName = null) {
     if (currentMarker) {
         map.removeLayer(currentMarker); // Remove previous marker
     }
 
-    const locationName = await getLocationName(lat, lon);
+    if (!locationName) {
+        locationName = await getLocationName(lat, lon);
+    }
+
     currentMarker = L.marker([lat, lon]).addTo(map).bindPopup(locationName).openPopup();
     map.setView([lat, lon]);
 
-    userInput.value = `Location: ${locationName}`;
+    selectedLat = lat;
+    selectedLon = lon;
+    selectedLocation = locationName;
+
+    // Update the search input
+    mapSearch.value = locationName;
 }
 
-// click  map
+// Allow users to add markers by clicking on the map
 map.on('click', function(event) {
     const { lat, lng } = event.latlng;
     addMarker(lat, lng);
 }); 
 
-// Get location name using revese geocode
+// Function to get location name from coordinates (Reverse Geocoding)
 async function getLocationName(lat, lon) {
     const url = `${nominatimURL}?format=json&lat=${lat}&lon=${lon}`;
     try {
@@ -67,13 +79,16 @@ const form = document.getElementById('chat-form');
 
 async function sendMessage() {
     const userMessage = userInput.value.trim();
-    if (!userMessage) {
-        alert("Please enter a message before sending.");
+
+    const fullMessage = selectedLocation ? `Location: ${selectedLocation}\n${userMessage}`.trim() : userMessage;
+    
+    if (!selectedLocation && !userMessage) {
+        alert("Please enter a message or select a location before sending.");
         return;
     }
 
     userInput.value = ''; // Clear input field
-    console.log("User Input:", userMessage);
+    console.log("User Input:", fullMessage);
 
     try {
         const response = await fetch('/generate', {
@@ -81,14 +96,26 @@ async function sendMessage() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ prompt: userMessage }),
+            body: JSON.stringify({ prompt: fullMessage }),
         });
 
         const data = await response.json();
         const botMessage = data.result;
 
+        // For the scale to be visualized
+        const visualScaleElements = document.getElementsByClassName('visual-scale');
+        const scaleMatch = botMessage.match(/Solar Farm Suitability Score: (\d+)/);
+        let scaleColor = '';
+        if (scaleMatch) {
+            const score = Number(scaleMatch[1]);
+            if (visualScaleElements.length > 0) {
+                const hue = (score / 10) * 120;
+                scaleColor = `hsl(${hue}, 100%, 50%)`;
+            }
+        }
+
         // Adds messages to the chat history
-        chatHistory.innerHTML += `<div class="user-message">${userMessage}</div>`;
+        chatHistory.innerHTML += `<div class="user-message">${fullMessage}</div>`;
         chatHistory.innerHTML += `<div class="bot-message">${botMessage}</div>`;
 
         // Check if response contains a location & add marker

@@ -84,11 +84,11 @@ body {
     z-index: -9999;
 }
 
-#header-logo:hover {
+.logo-container:hover #header-logo {
     transform: rotate(360deg);
 }
 
-#header-logo:not(:hover) {
+.logo-container:not(:hover) #header-logo {
     transform: rotate(-360deg);
 }
 
@@ -147,31 +147,28 @@ body {
     border-radius: 20px;
     z-index: 1;
 }
-
 #map-search {
-    color: #ffffff;
-    background-color: #0e0f3b;
+    color: black;
+    background-color: #f0f0f0;
     position: absolute;
     z-index: 2;
-    bottom: 0px;
-    left: 150px;
-    width: 64px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
+    bottom: 3px;
+    left: 165px;
+    width: 300px;
 }
 
-#map-search::placeholder {
-    color: #ffffff;
-}
-
-#map-search:focus {
-    color: #000000;
-    background-color: #ffffff;
-    width: 48.25%;
-}
-
-#map-search:focus::placeholder {
-    color: #0e0f3b;
+#map-form button{
+    background-color: #0e0f3b;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    z-index: 2;
+    position: absolute;
+    bottom: 3px;
+    left: 468px;
+    width: 40px;
+    font-size: 16px;
 }
 
 /*Chatbox Items CSS*/
@@ -237,7 +234,7 @@ body {
     overflow-y: auto;
 }
 
-.user-message, .bot-message, .start-message {
+.user-message, .bot-message, .visual-scale, .start-message {
     color: #0e0f3b;
     display: inline-block;
     word-wrap: break-word;
@@ -254,11 +251,19 @@ body {
     background-color: #f0f0f0;
 }
   
-.bot-message {
+.bot-message, .visual-scale {
     max-width: 92%;
     align-self: flex-start;
     text-align: left;
+}
+
+.bot-message {
     background-color: #fab668;
+}
+
+.visual-scale {
+    width: 92%;
+    height: 20px;
 }
 
 .start-message {
@@ -269,7 +274,7 @@ body {
   
 form {
     display: flex;
-    padding: 5px;
+    padding: 0px;
 }
 input, button{
     margin-bottom: 10px;
