@@ -1,16 +1,15 @@
 const nominatimURL = "https://nominatim.openstreetmap.org/reverse";
 
-// Initialize the map
-const map = L.map('map').setView([10.3157, 123.8854], 10); // Cebu, Philippines
+// Initialize the map, set it in Cebu
+const map = L.map('map').setView([10.3157, 123.8854], 10); 
 
 // Add OpneStreetMap tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
+//one marker at a time
+let currentMarker = null; 
 
-let currentMarker = null; // To store only one marker at a time
-
-// Function to add a single marker (removes previous marker)
 async function addMarker(lat, lon) {
     if (currentMarker) {
         map.removeLayer(currentMarker); // Remove previous marker
@@ -23,13 +22,13 @@ async function addMarker(lat, lon) {
     userInput.value = `Location: ${locationName}`;
 }
 
-// Allow users to add markers by clicking on the map
+// click  map
 map.on('click', function(event) {
     const { lat, lng } = event.latlng;
     addMarker(lat, lng);
 }); 
 
-// Function to get location name from coordinates (Reverse Geocoding)
+// Get location name using revese geocode
 async function getLocationName(lat, lon) {
     const url = `${nominatimURL}?format=json&lat=${lat}&lon=${lon}`;
     try {
