@@ -157,20 +157,6 @@ body {
     width: 300px;
 }
 
-#map-form button{
-    background-color: #0e0f3b;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 30px;
-    cursor: pointer;
-    z-index: 2;
-    position: absolute;
-    bottom: 3px;
-    left: 468px;
-    width: 40px;
-    font-size: 16px;
-}
-
 /*Chatbox Items CSS*/
 .chatbox {
     height: 75vh;
@@ -234,7 +220,7 @@ body {
     overflow-y: auto;
 }
 
-.user-message, .bot-message, .visual-scale, .start-message {
+.user-message, .bot-message, .start-message {
     color: #0e0f3b;
     display: inline-block;
     word-wrap: break-word;
@@ -251,7 +237,7 @@ body {
     background-color: #f0f0f0;
 }
   
-.bot-message, .visual-scale {
+.bot-message {
     max-width: 92%;
     align-self: flex-start;
     text-align: left;
@@ -259,11 +245,6 @@ body {
 
 .bot-message {
     background-color: #fab668;
-}
-
-.visual-scale {
-    width: 92%;
-    height: 20px;
 }
 
 .start-message {
