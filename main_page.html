@@ -25,10 +25,13 @@
 
     <div class="parentbox">
         <div class="mapbox">
-            <input type="text" autocomplete="off" id="map-search" placeholder="Search for a location">
+            <form id="map-form">
+                <input type="text" autocomplete="off" id="map-search" placeholder="Search location">
+                <button type="submit">Search</button>
+            </form>
             <div id="map"></div>
         </div>
-
+        
         <div class="chatbox">
             <img src="energAIze name dark.png" id="chat-logo" alt="energAIze logo">
             <div id="chat-history">
@@ -36,12 +39,12 @@
             </div>
             <form id="chat-form">
                 <input type="text" autocomplete="off" id="user-input" size="25" placeholder="Enter your message">
-                <button type="submit">Send</button>
+                <button type="submit">Send</button> 
             </form>
             <div id="loader" style="display: none;">
                 <img src="loader.gif" width="150px" alt="Loading...">
             </div>
-        </div>
+        </div>        
     </div>
 
     <!-- Leaflet.js JS -->

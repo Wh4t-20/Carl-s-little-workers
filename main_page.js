@@ -9,25 +9,36 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 let currentMarker = null; // To store only one marker at a time
+let selectedLat = null;
+let selectedLon = null;
+let selectedLocation = "";
 
 // Function to add a single marker (removes previous marker)
-async function addMarker(lat, lon) {
+async function addMarker(lat, lon, locationName = null) {
     if (currentMarker) {
         map.removeLayer(currentMarker); // Remove previous marker
     }
 
-    const locationName = await getLocationName(lat, lon);
+    if (!locationName) {
+        locationName = await getLocationName(lat, lon);
+    }
+
     currentMarker = L.marker([lat, lon]).addTo(map).bindPopup(locationName).openPopup();
     map.setView([lat, lon]);
 
-    userInput.value = `Location: ${locationName}`;
+    selectedLat = lat;
+    selectedLon = lon;
+    selectedLocation = locationName;
+
+    // Update the search input
+    document.getElementById('map-search').value = locationName;
 }
 
 // Allow users to add markers by clicking on the map
 map.on('click', function(event) {
     const { lat, lng } = event.latlng;
     addMarker(lat, lng);
-}); 
+});
 
 // Function to get location name from coordinates (Reverse Geocoding)
 async function getLocationName(lat, lon) {
@@ -45,14 +56,15 @@ async function getLocationName(lat, lon) {
 const mapSearch = document.getElementById('map-search');
 mapSearch.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
-        e.preventDefault();
+        e.preventDefault(); // Prevent form submission
         const location = e.target.value;
         fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
             .then(response => response.json())
             .then(data => {
                 if (data.length > 0) {
                     const { lat, lon } = data[0];
-                    addMarker(lat, lon);
+                    addMarker(lat, lon, location); // Pass the location name
+                    sendLocationToChatbot(location); // Send location to chatbot
                 }
             })
             .catch(error => console.error('Error fetching location:', error));
@@ -65,6 +77,7 @@ mapSearch.addEventListener('keypress', function (e) {
 const chatHistory = document.getElementById('chat-history');
 const userInput = document.getElementById('user-input');
 const form = document.getElementById('chat-form');
+const loader = document.getElementById('loader');
 
 async function sendMessage() {
     const userMessage = userInput.value.trim();
@@ -79,39 +92,29 @@ async function sendMessage() {
     try {
         const response = await fetch('/generate', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ prompt: userMessage }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                prompt: userMessage,
+                location: selectedLocation,
+                lat: selectedLat,
+                lon: selectedLon,
+            }),
         });
 
-        const data = await response.json();
-        const botMessage = data.result;
-
-        // Adds messages to the chat history
-        chatHistory.innerHTML += `<div class="user-message">${userMessage}</div>`;
-        chatHistory.innerHTML += `<div class="bot-message">${botMessage}</div>`;
-
-        // Check if response contains a location & add marker
-        const locationMatch = botMessage.match(/Location: (.*)/);
-        if (locationMatch) {
-            const location = locationMatch[1];
-            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.length > 0) {
-                        const { lat, lon } = data[0];
-                        addMarker(lat, lon);
-                    }
-                })
-                .catch(error => console.error('Error fetching location:', error));
+        if (!response.ok) {
+            throw new Error('Failed to fetch response');
         }
 
-        // Scroll to the bottom of the chat history
-        chatHistory.scrollTop = chatHistory.scrollHeight;
+        const data = await response.json();
+        if (!data.result) {
+            throw new Error('Empty AI response');
+        }
 
+        chatHistory.innerHTML += `<div class="user-message">${userMessage}</div>`;
+        chatHistory.innerHTML += `<div class="bot-message">${data.result}</div>`;
+        chatHistory.scrollTop = chatHistory.scrollHeight;
     } catch (error) {
-        console.error('Error:', error);
+        chatHistory.innerHTML += `<div class="bot-message error">Error: ${error.message}</div>`;
     }
 }
 
@@ -124,3 +127,23 @@ form.addEventListener('submit', (event) => {
         loader.style.display = 'none'; // Hide the loader after the message is sent
     });
 });
+
+// Function to send location to chatbot
+function sendLocationToChatbot(location) {
+    appendMessage("user", `Location: ${location}`);
+    userInput.value = `Location: ${location}`; //sets the user input to the location.
+    // Send the location to the chatbot for analysis
+    const loader = document.getElementById('loader');
+    loader.style.display = 'block';
+    sendMessage().finally(()=>{
+        loader.style.display = 'none';
+    });
+}
+
+function appendMessage(sender, message) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add(sender + "-message");
+    messageDiv.innerHTML = message.replace(/\n/g, '<br>');
+    chatHistory.appendChild(messageDiv);
+    chatHistory.scrollTop = chatHistory.scrollHeight; // Scroll to bottom
+}
